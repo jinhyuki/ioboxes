@@ -131,20 +131,45 @@ function setup_nginx {
     sudo firewall-cmd --reload
 }
 
+# Setup PHP
 function setup_php {
     # php 5.6
+    sudo yum remove php*
     sudo rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-    sudo yum --enablerepo=remi,remi-php56 install php-fpm php-common
-    sudo cp /etc/php.ini /etc/php.ini.bak
-
+    sudo yum --enablerepo=remi,remi-php56 install php-fpm php-common php
+    
     echo 'Later, you need to edit /etc/php.ini'
     read -n 1 -s
-    #sudo cp ./php.ini /etc/php.ini
+    sudo cp /etc/php.ini /etc/php.ini.bak
+    # sudo cp ./php.ini /etc/php.ini
+
+    # Set `cgi.fix_pathinfo=0`. 
+    # 
+    # Set the following as well. This sets server timezone. 
+    # 
+    # ```
+    # [Date]
+    # ; Defines the default timezone used by the date functions
+    # ; http://php.net/date.timezone
+    # date.timezone = America/Los_Angeles
+    # ```
 
     echo 'Later, you need to edit /etc/php-fpm.d/www.conf'
     read -n 1 -s
     sudo cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.bak
-    #sudo cp ./www.conf /etc/php-fpm.d/www.conf
+    # sudo cp ./www.conf /etc/php-fpm.d/www.conf
+    #
+    # Set `listen = /var/run/php-fpm/php-fpm.sock`. 
+    # Set `user = nginx` and `group = nginx`
+    # Also...
+    # Option A:
+    # Set `listen.owner = nobody` 
+    # Set `listen.group = nobody`. 
+    # Set `listen.mode = 0666`. (not sure why required but, it is required for php5.6 version). 
+    # Option B:
+    # Set `listen.owner = nginx` 
+    # Set `listen.group = nginx`. 
+    # Set `listen.mode = 0660`.
     
     sudo mkdir -p /project/ioboxes/
     echo "<?php echo \"Hello World\" ?>" > /project/ioboxes/index.php
@@ -153,8 +178,8 @@ function setup_php {
     sudo mkdir -p /etc/nginx/sites-enabled
 
     #Add these lines to the end of the http {} block:
-    #include /etc/nginx/sites-enabled/*.conf;
-    #server_names_hash_bucket_size 64;    
+    # include /etc/nginx/sites-enabled/*.conf;
+    # server_names_hash_bucket_size 64;    
     echo 'Later, you need to edit /etc/nginx/nginx.conf'
     read -n 1 -s
 
@@ -165,9 +190,25 @@ function setup_php {
     sudo systemctl start php-fpm && sudo systemctl enable php-fpm
 
     sudo systemctl restart nginx
+    sudo systemctl restart php-fpm
 
     # try following command
     #links http://localhost/info.php
 }
 
+# Setup Symfony
+function setup_symfony {
+    echo "Installing Composer globally..."
+    #mkdir -p ~/tmp
+    #cd ~/tmp
+    #sudo curl -sS https://getcomposer.org/installer | php
+    #sudo mv composer.phar /usr/bin/composer
+    
+    sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+    sudo chmod a+x /usr/local/bin/symfony
 
+    cd /project
+    #mv /project/ioboxes /project/ioboxes_backup
+    symfony new ioboxes
+    #chmod 0775 ioboxes
+}
