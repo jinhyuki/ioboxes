@@ -134,9 +134,16 @@ function setup_nginx {
 # Setup PHP
 function setup_php {
     # php 5.6
-    sudo yum remove php*
+    
+    # might want to remove php just in case.
+    # sudo yum remove php*
+    # However, list them all, and re-install them.
+
     sudo rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
     sudo yum --enablerepo=remi,remi-php56 install php-fpm php-common php
+
+    # since we removed all php packages, let's install everythings we need.
+    sudo yum --enablerepo=remi,remi-php56 install php-xml php-pear
     
     echo 'Later, you need to edit /etc/php.ini'
     read -n 1 -s
@@ -170,30 +177,52 @@ function setup_php {
     # Set `listen.owner = nginx` 
     # Set `listen.group = nginx`. 
     # Set `listen.mode = 0660`.
-    
-    sudo mkdir -p /project/ioboxes/
-    echo "<?php echo \"Hello World\" ?>" > /project/ioboxes/index.php
-    
+        
     sudo mkdir -p /etc/nginx/sites-available
     sudo mkdir -p /etc/nginx/sites-enabled
 
-    #Add these lines to the end of the http {} block:
+    # Add these lines to the end of the http {} block:
     # include /etc/nginx/sites-enabled/*.conf;
     # server_names_hash_bucket_size 64;    
     echo 'Later, you need to edit /etc/nginx/nginx.conf'
     read -n 1 -s
 
+    sudo systemctl start php-fpm && sudo systemctl enable php-fpm
+    sudo systemctl restart nginx && sudo systemctl restart php-fpm
+
+
+}
+
+# configure ioboxes directory and permissions
+function config_ioboxes {
+    # Copy ioboxes.conf file
+    # See [Guide](https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/)
+    echo 'Later, you need to edit /etc/nginx/sites-available/ioboxes.conf'
+    read -n 1 -s
     sudo cp ./ioboxes.conf /etc/nginx/sites-available/
     sudo cp /etc/nginx/sites-available/ioboxes.conf /etc/nginx/sites-available/ioboxes.conf.bak
     sudo ln -s /etc/nginx/sites-available/ioboxes.conf /etc/nginx/sites-enabled/ioboxes.conf
 
-    sudo systemctl start php-fpm && sudo systemctl enable php-fpm
-
-    sudo systemctl restart nginx
-    sudo systemctl restart php-fpm
+    # to fix the cache and log error. (500 internal server error)
+    # See [guide](http://symfony.com/doc/current/book/installation.html#configuration-and-setup)
+    rm -rf /project/ioboxes/var/cache/*
+    rm -rf /project/ioboxes/var/logs/*
+    chmod 0777 /project/ioboxes/var/logs
+    chmod 0777 /project/ioboxes/var/cache
+    chcon -R -t httpd_sys_rw_content_t /project/ioboxes/var/logs
+    chcon -R -t httpd_sys_rw_content_t /project/ioboxes/var/cache
+    setfacl -R -m u:nginx:rwX -m u:`whoami`:rwX /project/ioboxes/var/cache /project/ioboxes/var/logs
+    setfacl -dR -m u:nginx:rwX -m u:`whoami`:rwX /project/ioboxes/var/cache /project/ioboxes/var/logs
+    #getfacl /project/ioboxes/var/logs
+    #getfacl /project/ioboxes/var/cache
+    sudo systemctl restart nginx && sudo systemctl restart php-fpm
 
     # try following command
-    #links http://localhost/info.php
+    # links http://localhost/
+
+    # also try this in another terminal and try the url.
+    # http://localhost/app_dev.php
+    # tail -F /var/log/nginx/ioboxes.error.log
 }
 
 # Setup Symfony
@@ -207,8 +236,8 @@ function setup_symfony {
     sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
     sudo chmod a+x /usr/local/bin/symfony
 
-    cd /project
+    #cd /project
     #mv /project/ioboxes /project/ioboxes_backup
-    symfony new ioboxes
+    #symfony new ioboxes
     #chmod 0775 ioboxes
 }
