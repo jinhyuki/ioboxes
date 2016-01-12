@@ -143,8 +143,10 @@ function setup_php {
     sudo yum --enablerepo=remi,remi-php56 install php-fpm php-common php
 
     # since we removed all php packages, let's install everythings we need.
-    sudo yum --enablerepo=remi,remi-php56 install php-xml php-pear
+    sudo yum --enablerepo=remi,remi-php56 install php-xml php-pear php-opcache php-cli php-pdo php-xml php-gd php-mbstring php-mcrypt
     
+    # See [this guide](http://www.if-not-true-then-false.com/2011/install-nginx-php-fpm-on-fedora-centos-red-hat-rhel/) for modules
+
     echo 'Later, you need to edit /etc/php.ini'
     read -n 1 -s
     sudo cp /etc/php.ini /etc/php.ini.bak
