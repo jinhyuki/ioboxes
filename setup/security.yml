@@ -41,3 +41,6 @@ security:
         Symfony\Component\Security\Core\User\User:
             algorithm: bcrypt
             cost: 12
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
