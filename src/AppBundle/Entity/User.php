@@ -1,16 +1,21 @@
 <?php
 
+// src/AppBundle/Entity/User.php
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  *
  * @ORM\Table(name="tb_user")
+ * @UniqueEntity(fields="username", message="Email already taken")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -22,27 +27,32 @@ class User
     private $id;
 
     /**
+     * Username in form of email
+     *
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $email;
+    private $username;
 
     /**
+     * Persisted hashed passwords
+     *
      * @var string
      *
-     * @ORM\Column(name="hash", type="string", length=255, nullable=true)
-     */
-    private $hash;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max = 4096)
-     * This is plain password which is not persisted.
+     * @ORM\Column(name="password", type="string", length=64, nullable=true)
      */
     private $password;
+
+    /**
+     * This is plain password which is not persisted.
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 4096)
+     */
+    private $plainPassword;
 
     /**
      * Get id
@@ -61,45 +71,21 @@ class User
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setUsername($username)
     {
-        $this->email = $email;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get username
      *
      * @return string
      */
-    public function getEmail()
+    public function getUsername()
     {
-        return $this->email;
-    }
-
-    /**
-     * Set hash
-     *
-     * @param string $hash
-     *
-     * @return User
-     */
-    public function setHash($hash)
-    {
-        $this->hash = $hash;
-
-        return $this;
-    }
-
-    /**
-     * Get hash
-     *
-     * @return string
-     */
-    public function getHash()
-    {
-        return $this->hash;
+        return $this->username;
     }
 
     /**
@@ -112,18 +98,32 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
+        
+        return $this;
+    }
+
+    /**
+     * Set plain password
+     *
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
     /**
-     * Get password
+     * Get plain password
      *
      * @return string
      */
-    public function getPassword()
+    public function getPlainPassword()
     {
-        return $this->password;
+        return $this->plainPassword;
     }
 }
 
