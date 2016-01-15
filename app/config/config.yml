@@ -1,8 +1,7 @@
 imports:
 #    - { resource: parameters.yml }
     - { resource: /etc/ioboxes/parameters.yml }
-#    - { resource: security.yml }
-    - { resource: /etc/ioboxes/security.yml }
+    - { resource: security.yml }
     - { resource: services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed

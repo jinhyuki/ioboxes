@@ -339,7 +339,4 @@ function setup_symfony {
     echo 'Later, you need to edit /etc/ioboxes/parameters.yml'
     read -n 1 -s
 
-    # security settings should be copied.
-    sudo cp ./security.yml /etc/ioboxes/security.yml
-
 }
