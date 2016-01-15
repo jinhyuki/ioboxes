@@ -238,6 +238,10 @@ function setup_php {
     sudo systemctl start php-fpm && sudo systemctl enable php-fpm
     sudo systemctl restart nginx && sudo systemctl restart php-fpm
 
+    # set session permission 
+    # See [guide](http://serverfault.com/questions/695535/nginx-on-fedora-fastcgi-not-working)
+    sudo setfacl -m u:nginx:rwx,d:u:nginx:rwx /var/lib/php/session
+    sudo chown nginx:nginx /var/lib/php/session
 
 }
 
