@@ -28,14 +28,13 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        secured_area:
+        main:
+            anonymous: ~
+            http_basic: ~
             logout:
                 path:   /logout
                 target: /
 
-        main:
-            anonymous: ~
-            http_basic: ~
             #form_login:
                 # submit the login form here
                 #check_path: /login_check
