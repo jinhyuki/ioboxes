@@ -1,6 +1,7 @@
 <?php
 
 // src/AppBundle/Entity/User.php
+// See this [documentation](http://api.symfony.com/3.0/Symfony/Component/Security/Core/User/UserInterface.html#method_getUsername)
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -38,7 +39,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * Persisted hashed passwords
+     * Persisted hashed password
      *
      * @var string
      *
@@ -98,7 +99,7 @@ class User implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
-        
+
         return $this;
     }
 
@@ -124,6 +125,34 @@ class User implements UserInterface
     public function getPlainPassword()
     {
         return $this->plainPassword;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return Role[]
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Erase credentials
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = false;
     }
 }
 
