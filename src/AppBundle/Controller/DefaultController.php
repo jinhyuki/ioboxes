@@ -38,4 +38,13 @@ class DefaultController extends Controller
 
         return new Response('Created product id '.$product->getId());
     }
+
+    /**
+     * @Route("/admin")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
 }
