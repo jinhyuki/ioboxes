@@ -25,6 +25,8 @@ class User
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -35,6 +37,12 @@ class User
      */
     private $hash;
 
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 4096)
+     * This is plain password which is not persisted.
+     */
+    private $password;
 
     /**
      * Get id
@@ -92,6 +100,30 @@ class User
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 }
 
