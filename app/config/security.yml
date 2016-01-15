@@ -16,7 +16,12 @@ security:
             #         admin:
             #             password: $2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G
             #             roles: 'ROLE_ADMIN'
-
+        ioboxes_persisted_entity:
+            entity:
+                class:              AppBundle:User
+                property:           username
+                # name of a non-default entity manager
+                manager_name:       ~
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -38,9 +43,11 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     access_control:
-        # require ROLE_ADMIN for /admin*
+        # anonymous access
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # require ROLE_ADMIN for /admin*
         - { path: ^/admin, roles: ROLE_ADMIN }
+        # require ROLE_USER for /*
         - { path: ^/, roles: ROLE_USER }
 
     encoders:
