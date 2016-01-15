@@ -30,6 +30,7 @@ security:
 
         main:
             anonymous: ~
+            #logout does not work with http_basic
             #http_basic: ~
             logout:
                 path:   /logout
