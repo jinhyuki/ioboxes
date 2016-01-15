@@ -6,6 +6,21 @@ function setup_login {
     # id -u eng &>/dev/null || useradd eng 
     # need to set password
     su eng
+
+    # setup time zone
+    sudo timedatectl set-timezone America/Los_Angeles
+    sudo timedatectl
+}
+
+# set centos
+function setup_centos {
+    # setup time zone
+    sudo timedatectl set-timezone America/Los_Angeles
+    sudo timedatectl
+
+    #selinux
+    sudo setenforce 1
+    sudo getenforce
 }
 
 # Setup firewall
@@ -47,10 +62,14 @@ function clone_ioboxes {
     # If you want to share the folder and also 
     # serve php from the folder, do this.
     sudo chmod 0775 /project/ioboxes/
-    #sudo chcon -R -t usr_t /project/ioboxes/
+    # sudo chcon -R -t usr_t /project/ioboxes/
     sudo chcon -R -h -t httpd_sys_content_t /project/ioboxes/
-    #sudo setsebool -P allow_smbd_anon_write 1
-    #sudo setsebool -P allow_httpd_anon_write 1
+    # sudo setsebool -P allow_smbd_anon_write 1
+    # sudo setsebool -P allow_httpd_anon_write 1
+
+    # keep setup folder secure
+    sudo chcon -R -h -t default_t /project/ioboxes/setup/
+    # sudo chmod 0775 /project/ioboxes/
 }
 
 # Update all package
@@ -66,9 +85,21 @@ function setup_hostname {
     echo 'ioboxes' | sudo tee /etc/hostname
 }
 
+# Install git
+function setup_git {
+    sudo yum -y install git
+
+    # commands
+    # git add .
+    # git status
+    # git commit -m "message"
+    # git show-branch
+    # git push origin master
+
+}
+
 # Install utilities
 function setup_utilities {
-    sudo yum -y install git
     sudo yum -y install wget
     sudo yum -y install epel-release
     sudo yum -y install p7zip
@@ -95,7 +126,8 @@ function setup_samba {
     sudo firewall-cmd --reload
     
     # Add Samba-specific password for your user.
-    echo "Type In Samba Password"
+    echo "Type In Samba Password later via smbpasswd -a eng"
+    read -n 1 -s
     
     # need to save smb password.
     # sudo smbpasswd -a eng
@@ -117,6 +149,20 @@ function setup_mysql {
     sudo /etc/init.d/mysql start
     sudo mysql_upgrade -u root -p
     sudo systemctl enable mariadb
+
+    # Version 5.5.3 introduced "utf8mb4", which is recommended
+    # collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+    # character-set-server = utf8mb4            # Replaces utf8
+    # See [guide](http://symfony.com/doc/current/book/doctrine.html)
+    sudo cp /etc/my.cnf.d/server.cnf /etc/my.cnf.d/server.cnf.bak
+    echo 'Later, you need to edit /etc/my.cnf.d/server.cnf'
+    read -n 1 -s
+    sudo systemctl restart mariadb
+
+    // Selinux setup (important)
+    // See [guide](https://www.drupal.org/node/2110549)
+    sudo setsebool -P httpd_can_network_connect_db on
+    getsebool httpd_can_network_connect_db
 }
 
 function setup_nginx {
@@ -143,7 +189,7 @@ function setup_php {
     sudo yum --enablerepo=remi,remi-php56 install php-fpm php-common php
 
     # since we removed all php packages, let's install everythings we need.
-    sudo yum --enablerepo=remi,remi-php56 install php-xml php-pear php-opcache php-cli php-pdo php-xml php-gd php-mbstring php-mcrypt
+    sudo yum --enablerepo=remi,remi-php56 install php-xml php-pear php-opcache php-cli php-pdo php-xml php-gd php-mbstring php-mcrypt php-mysql
     
     # See [this guide](http://www.if-not-true-then-false.com/2011/install-nginx-php-fpm-on-fedora-centos-red-hat-rhel/) for modules
 
@@ -213,6 +259,7 @@ function config_ioboxes {
     chmod 0777 /project/ioboxes/var/cache
     chcon -R -t httpd_sys_rw_content_t /project/ioboxes/var/logs
     chcon -R -t httpd_sys_rw_content_t /project/ioboxes/var/cache
+
     setfacl -R -m u:nginx:rwX -m u:`whoami`:rwX /project/ioboxes/var/cache /project/ioboxes/var/logs
     setfacl -dR -m u:nginx:rwX -m u:`whoami`:rwX /project/ioboxes/var/cache /project/ioboxes/var/logs
     #getfacl /project/ioboxes/var/logs
@@ -230,16 +277,53 @@ function config_ioboxes {
 # Setup Symfony
 function setup_symfony {
     echo "Installing Composer globally..."
-    #mkdir -p ~/tmp
-    #cd ~/tmp
-    #sudo curl -sS https://getcomposer.org/installer | php
-    #sudo mv composer.phar /usr/bin/composer
+    # mkdir -p ~/tmp
+    # cd ~/tmp
+    # sudo curl -sS https://getcomposer.org/installer | php
+    # sudo mv composer.phar /usr/bin/composer
     
     sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
     sudo chmod a+x /usr/local/bin/symfony
 
-    #cd /project
-    #mv /project/ioboxes /project/ioboxes_backup
-    #symfony new ioboxes
-    #chmod 0775 ioboxes
+    # cd /project
+    # mv /project/ioboxes /project/ioboxes_backup
+    # symfony new ioboxes
+    # chmod 0775 ioboxes
+    
+    # Doctrine config
+    # app/config/parameters.yml
+
+    # Create db
+    # php bin/console doctrine:database:create
+
+    # Create entity
+    # php bin/console doctrine:generate:entity
+    
+    # To generate getters and setters
+    # See [guide](http://symfony.com/doc/current/book/doctrine.html)
+    # php bin/console doctrine:generate:entities AppBundle/Entity/Product
+    # php bin/console doctrine:generate:entities AppBundle
+    # php bin/console doctrine:generate:entities Acme
+
+    # Create schema
+    # php bin/console doctrine:schema:update --force
+
+    # Learn about migrations
+
+    # Verify
+    # mysql> show databases;
+    # mysql> use ioboxes;
+    # mysql> show columns from tb_product
+
+
+    # copy and configure database
+    # enter in 'database_user', 'database_password', 'secret'
+    sudo mkdir -p /etc/ioboxes
+    sudo cp ./parameters.yml /etc/ioboxes/parameters.yml
+    echo 'Later, you need to edit /etc/ioboxes/parameters.yml'
+    read -n 1 -s
+
+    # security settings should be copied.
+    sudo cp ./security.yml /etc/ioboxes/security.yml
+
 }
