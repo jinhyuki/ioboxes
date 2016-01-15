@@ -1,5 +1,5 @@
 Server Setup Guide V1
-=================
+=====================
 
 Initial version (V1) was written by Jin Cho on 1/9/2016.
 
