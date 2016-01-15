@@ -278,6 +278,12 @@ function config_ioboxes {
         cp ~/.bashrc ~/.bashrc.bak
     fi
 
+    if grep -q 'alias ioboxes' ~/.bashrc; then
+        echo "alias exists"
+    else
+        echo "alias ioboxes='. /project/ioboxes/bin/ioboxes.sh'" >> ~/.bashrc
+    fi
+
 }
 
 # Setup Symfony
