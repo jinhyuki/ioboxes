@@ -272,6 +272,12 @@ function config_ioboxes {
     # also try this in another terminal and try the url.
     # http://localhost/app_dev.php
     # tail -F /var/log/nginx/ioboxes.error.log
+
+    # back up bashrc just in case
+    if [ -e ~/.bashrc ]
+        cp ~/.bashrc ~/.bashrc.bak
+    fi
+
 }
 
 # Setup Symfony
