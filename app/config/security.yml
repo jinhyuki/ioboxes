@@ -6,8 +6,8 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        #in_memory:
+            #memory: ~
             # memory:
             #     users:
             #         ryan:
@@ -31,46 +31,46 @@ security:
         main:
             anonymous: ~
             http_basic: ~
-#            form_login:
-#                # submit the login form here
-#                check_path: /login_check
-#
-#                # the user is redirected here when they need to log in
-#                login_path: /login
-#
-#                # if true, forward the user to the login form instead of redirecting
-#                #use_forward: false
-#
-#                # login success redirecting options (read further below)
-#                #always_use_default_target_path: false
-#                #default_target_path:            /
-#                #target_path_parameter:          _target_path
-#                #use_referer:                    false
-#
-#                # login failure redirecting options (read further below)
-#                #failure_path:    /foo
-#                #failure_forward: false
-#                #failure_path_parameter: _failure_path
-#                #failure_handler: some.service.id
-#                #success_handler: some.service.id
-#
-#                # field names for the username and password fields
-#                #username_parameter: _username
-#                #password_parameter: _password
-#
-#                # csrf token options
-#                #csrf_parameter: _csrf_token
-#                #intention:      authenticate
-#                #csrf_provider:  my.csrf_provider.id
-#
-#                # by default, the login form *must* be a POST, not a GET
-#                #post_only:      true
-#                #remember_me:    false
-#
-#                # by default, a session must exist before submitting an authentication request
-#                # if false, then Request::hasPreviousSession is not called during authentication
-#                # new in Symfony 2.3
-#                #require_previous_session: true
+            #form_login:
+                # submit the login form here
+                #check_path: /login_check
+
+                # the user is redirected here when they need to log in
+                #login_path: /login
+
+                # if true, forward the user to the login form instead of redirecting
+                #use_forward: false
+
+                # login success redirecting options (read further below)
+                #always_use_default_target_path: false
+                #default_target_path:            /
+                #target_path_parameter:          _target_path
+                #use_referer:                    false
+
+                # login failure redirecting options (read further below)
+                #failure_path:    /foo
+                #failure_forward: false
+                #failure_path_parameter: _failure_path
+                #failure_handler: some.service.id
+                #success_handler: some.service.id
+
+                # field names for the username and password fields
+                #username_parameter: _username
+                #password_parameter: _password
+
+                # csrf token options
+                #csrf_parameter: _csrf_token
+                #intention:      authenticate
+                #csrf_provider:  my.csrf_provider.id
+
+                # by default, the login form *must* be a POST, not a GET
+                #post_only:      true
+                #remember_me:    false
+
+                # by default, a session must exist before submitting an authentication request
+                # if false, then Request::hasPreviousSession is not called during authentication
+                # new in Symfony 2.3
+                #require_previous_session: true
 
             #logout:
             #    path:   /logout
