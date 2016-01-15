@@ -48,4 +48,13 @@ class DefaultController extends Controller
     {
         return new Response('<html><body>Admin page!</body></html>');
     }
+
+    /**
+     * @Route("/account")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function accountAction()
+    {
+        return new Response('<html><body>Account page!</body></html>');
+    }
 }
