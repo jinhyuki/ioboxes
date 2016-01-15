@@ -104,6 +104,16 @@ class User implements UserInterface
     }
 
     /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
      * Set plain password
      *
      * @param string $plainPassword
