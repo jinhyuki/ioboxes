@@ -41,7 +41,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="admin_page")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function adminAction()
@@ -50,7 +50,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/account")
+     * @Route("/account", name="user_account")
      * @Security("has_role('ROLE_USER')")
      */
     public function accountAction()
