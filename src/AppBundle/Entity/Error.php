@@ -24,10 +24,7 @@ class Error
      */
     protected $message;    
 
-    function __construct($code=null, $message=null) {
-        // parent constructor called first ALWAYS
-        parent::__construct();
-
+    public function __construct($code=null, $message=null) {
         $this->code = $code;
         $this->message = $message;
     }
