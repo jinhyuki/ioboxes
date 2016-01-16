@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,6 +19,10 @@ class CheckSheetController extends Controller
 {
     /**
      * Lists all CheckSheet entities.
+     * 
+     * Note on JSON response
+     * See [JMS Serialization](https://github.com/schmittjoh/JMSSerializerBundle/blob/master/Resources/doc/index.rst)
+     * See [this guide](http://symfony.com/doc/current/components/http_foundation/introduction.html)
      *
      * @Route("/", name="checksheet_index")
      * @Method("GET")
@@ -26,17 +30,19 @@ class CheckSheetController extends Controller
     public function indexAction()
     {
 
-        // JSON response
-        // See [this guide](http://symfony.com/doc/current/components/http_foundation/introduction.html)
         $em = $this->getDoctrine()->getManager();
 
         $checkSheets = $em->getRepository('AppBundle:CheckSheet')->findAll();
 
-        $response = new JsonResponse();
-        $response->setData(array(
-            'checkSheets' => $checkSheets,
-        ));
-        return $response;
+        $checkSheetsJSON = $this->get('jms_serializer')->serialize($checkSheets, 'json');
+
+        dump($checkSheets, $checkSheetsJSON);
+
+        return new Response(
+            $checkSheetsJSON,
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
     }
 
     /**

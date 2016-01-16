@@ -293,10 +293,10 @@ function config_ioboxes {
 # Setup Symfony
 function setup_symfony {
     echo "Installing Composer globally..."
-    # mkdir -p ~/tmp
-    # cd ~/tmp
-    # sudo curl -sS https://getcomposer.org/installer | php
-    # sudo mv composer.phar /usr/bin/composer
+    mkdir -p ~/tmp
+    cd ~/tmp
+    sudo curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/bin/composer
     
     sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
     sudo chmod a+x /usr/local/bin/symfony

@@ -94,31 +94,4 @@ class CheckSheet
     {
         return $this->user;
     }
-
-
-    /** 
-     * @see \Serializable::serialize() 
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->name,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** 
-     * @see \Serializable::unserialize() 
-     */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->name,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized);
-    }
 }
