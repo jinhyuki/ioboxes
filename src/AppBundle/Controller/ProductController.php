@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->getUser();
-
+	dump($user);
         $userId = $user->getId();
         $product = new Product();
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
