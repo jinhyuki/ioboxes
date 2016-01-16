@@ -8,10 +8,10 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-    # Prevent ajax login redirect
+    # Prevent login redirect
     # See [guide](http://intelligentbee.com/blog/2015/08/25/how-to-fix-symfony2-ajax-login-redirect/)
     # Try `curl http://ioboxes.com/app_dev.php/api/checksheet` when not logged in.
-    # ajax.authentication.listener:
-    #     class: AppBundle\EventListener\AjaxAuthenticationListener
+    # authentication.listener:
+    #     class: AppBundle\EventListener\AuthenticationListener
     #     tags:
     #       - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }

@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/EventListener/AjaxAuthenticationListener.php
+// src/AppBundle/EventListener/AuthenticationListener.php
 
 namespace AppBundle\EventListener;
 
@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 /**
  */
-class AjaxAuthenticationListener
+class AuthenticationListener
 {
 
     /**

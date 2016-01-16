@@ -31,7 +31,10 @@ class CheckSheetController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $checkSheets = $em->getRepository('AppBundle:CheckSheet')->findAll();
+        $checkSheets = $em->getRepository('AppBundle:CheckSheet')->findBy( 
+            array('user' => $this->getUser()),
+            array('id' => 'ASC')
+        );
 
         $checkSheetsJSON = $this->get('jms_serializer')->serialize($checkSheets, 'json');
 
