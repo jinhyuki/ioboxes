@@ -24,7 +24,6 @@ class CheckItem
     /**
      * @var int
      *
-     * @ORM\SheetId
      * @ORM\ManyToOne(targetEntity="CheckSheet")
      * @ORM\JoinColumn(name="sheet_id", referencedColumnName="id")
      */
