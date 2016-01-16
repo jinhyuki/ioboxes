@@ -36,12 +36,18 @@ class CheckItem
     private $reward;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="done", type="boolean")
+     */
+    private $done;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=1)
      */
-    private $status;
-
+    private $shown;
 
     /**
      * Get id

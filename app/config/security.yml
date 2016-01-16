@@ -104,6 +104,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         # require ROLE_USER for /account*
         - { path: ^/account, roles: ROLE_USER }
+        - { path: ^/api, roles: ROLE_USER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
     encoders:
