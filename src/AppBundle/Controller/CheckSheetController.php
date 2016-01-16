@@ -85,7 +85,7 @@ class CheckSheetController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $checkSheet = $em->getRepository('AppBundle:CheckSheet')->findOneBy( 
-            array('user' => $this->getUser(), 'id' => $id);
+            array('user' => $this->getUser(), 'id' => $id)
         );
         $deleteForm = $this->createDeleteForm($checkSheet);
 
