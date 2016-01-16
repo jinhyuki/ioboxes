@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CheckItem
  *
- * @ORM\Table(name="check_item")
+ * @ORM\Table(name="tb_check_item")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CheckItemRepository")
  */
 class CheckItem
@@ -22,12 +22,10 @@ class CheckItem
     private $id;
 
     /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity="CheckSheet")
-     * @ORM\JoinColumn(name="sheet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="check_sheet_id", referencedColumnName="id")
      */
-    private $sheetId;
+    private $checkSheet;
 
     /**
      * @var string
@@ -138,5 +136,53 @@ class CheckItem
     {
         return $this->status;
     }
-}
 
+    /**
+     * Set done
+     *
+     * @param boolean $done
+     *
+     * @return CheckItem
+     */
+    public function setDone($done)
+    {
+        $this->done = $done;
+
+        return $this;
+    }
+
+    /**
+     * Get done
+     *
+     * @return boolean
+     */
+    public function getDone()
+    {
+        return $this->done;
+    }
+
+    /**
+     * Set flushed
+     *
+     * @param boolean $flushed
+     *
+     * @return CheckItem
+     */
+    public function setFlushed($flushed)
+    {
+        $this->flushed = $flushed;
+
+        return $this;
+    }
+
+    /**
+     * Get flushed
+     *
+     * @return boolean
+     */
+    public function getFlushed()
+    {
+        return $this->flushed;
+    }
+
+}

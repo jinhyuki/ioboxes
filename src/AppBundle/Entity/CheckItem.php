@@ -185,4 +185,28 @@ class CheckItem
         return $this->flushed;
     }
 
+
+    /**
+     * Set checkSheet
+     *
+     * @param \AppBundle\Entity\CheckSheet $checkSheet
+     *
+     * @return CheckItem
+     */
+    public function setCheckSheet(\AppBundle\Entity\CheckSheet $checkSheet = null)
+    {
+        $this->checkSheet = $checkSheet;
+
+        return $this;
+    }
+
+    /**
+     * Get checkSheet
+     *
+     * @return \AppBundle\Entity\CheckSheet
+     */
+    public function getCheckSheet()
+    {
+        return $this->checkSheet;
+    }
 }
