@@ -19,6 +19,10 @@ elif [ "$1" = "commit" ]; then
     git add . 
     git commit -m "$2"
     git push origin master
+elif [ "$1" = "refresh" ]; then
+    echo "Action: Refresh"
+    # restart server
+    sudo systemctl restart nginx && sudo systemctl restart php-fpm
 else
     echo "usage:"
     echo "- ioboxes upgrade: upgrade current ioboxes"
