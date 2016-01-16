@@ -194,3 +194,4 @@ class User implements UserInterface
         ) = unserialize($serialized);
     }
 }
+
