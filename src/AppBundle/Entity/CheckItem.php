@@ -22,6 +22,15 @@ class CheckItem
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\SheetId
+     * @ORM\ManyToOne(targetEntity="CheckSheet")
+     * @ORM\JoinColumn(name="sheet_id", referencedColumnName="id")
+     */
+    private $sheetId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="text", type="string", length=512)
@@ -45,9 +54,9 @@ class CheckItem
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=1)
+     * @ORM\Column(name="flushed", type="boolean")
      */
-    private $shown;
+    private $flushed;
 
     /**
      * Get id

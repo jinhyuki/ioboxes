@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * CheckSheet
+ * For associations see [this guide](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/association-mapping.html)
  *
  * @ORM\Table(name="check_sheet")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CheckSheetRepository")
@@ -20,6 +21,15 @@ class CheckSheet
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\UserId
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $userId;
 
     /**
      * @var string
