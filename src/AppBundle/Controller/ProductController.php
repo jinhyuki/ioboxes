@@ -43,8 +43,6 @@ class ProductController extends Controller
     {
         $user = $this->getUser();
 
-        var_dump($user);
-
         $userId = $user->getId();
         $product = new Product();
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
