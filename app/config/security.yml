@@ -31,14 +31,14 @@ security:
         main:
             anonymous: ~
             #logout does not work with http_basic
-            #http_basic: ~
-            logout:
-                path:   /logout
-                target: /
+            http_basic: ~
+            #logout:
+                #path:   /logout
+                #target: /
 
-            form_login:
+            #form_login:
                 # submit the login form here
-                check_path: /login_check
+                #check_path: /login_check
 
                 # the user is redirected here when they need to log in
                 #login_path: /login

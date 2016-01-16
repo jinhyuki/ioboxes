@@ -10,7 +10,8 @@ services:
 
     # Prevent ajax login redirect
     # See [guide](http://intelligentbee.com/blog/2015/08/25/how-to-fix-symfony2-ajax-login-redirect/)
-    ajax.authentication.listener:
-        class: AppBundle\EventListener\AjaxAuthenticationListener
-        tags:
-          - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }
+    # Try `curl http://ioboxes.com/app_dev.php/api/checksheet` when not logged in.
+    # ajax.authentication.listener:
+    #     class: AppBundle\EventListener\AjaxAuthenticationListener
+    #     tags:
+    #       - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }
