@@ -12,7 +12,6 @@ use AppBundle\Form\CheckSheetType;
 
 /**
  * CheckSheet controller.
- *
  * @Route("/checksheet")
  */
 class CheckSheetController extends Controller

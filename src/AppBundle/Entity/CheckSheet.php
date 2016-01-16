@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="tb_check_sheet")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CheckSheetRepository")
+ * @ExclusionPolicy("all")
  */
 class CheckSheet
 {
@@ -19,6 +20,7 @@ class CheckSheet
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -32,6 +34,7 @@ class CheckSheet
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Expose
      */
     private $name;
 
