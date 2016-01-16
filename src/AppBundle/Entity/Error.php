@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+
 
 /**
  * Error
