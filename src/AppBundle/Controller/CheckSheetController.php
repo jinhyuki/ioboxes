@@ -35,13 +35,13 @@ class CheckSheetController extends Controller
             array('user' => $this->getUser()),
             array('id' => 'ASC')
         );
+        $result = array('result' => $checkSheets, 'errors' => array());
+        $json = $this->get('jms_serializer')->serialize($result, 'json');
 
-        $checkSheetsJSON = $this->get('jms_serializer')->serialize($checkSheets, 'json');
-
-        //dump($checkSheets, $checkSheetsJSON);
+        //dump($checkSheets, $json);
 
         return new Response(
-            $checkSheetsJSON,
+            $json,
             Response::HTTP_OK,
             array('Content-Type' => 'application/json')
         );
@@ -87,12 +87,32 @@ class CheckSheetController extends Controller
         $checkSheet = $em->getRepository('AppBundle:CheckSheet')->findOneBy( 
             array('user' => $this->getUser(), 'id' => $id)
         );
+
+        if ($checkSheet) {
+            $result = array('result' => $checkSheet, 'errors' => array());
+            $json = $this->get('jms_serializer')->serialize($result, 'json');
+            return new Response(
+                $json,
+                Response::HTTP_OK,
+                array('Content-Type' => 'application/json')
+            );
+        } else {
+            $result = array('result' => null, 'errors' => array(array('message' => 'Not found')));
+            $json = $this->get('jms_serializer')->serialize($result, 'json');
+            return new Response(
+                $json,
+                Response::HTTP_OK,
+                array('Content-Type' => 'application/json')
+            );
+        }
+        /*
         $deleteForm = $this->createDeleteForm($checkSheet);
 
         return $this->render('checksheet/show.html.twig', array(
             'checkSheet' => $checkSheet,
             'delete_form' => $deleteForm->createView(),
         ));
+        */
     }
 
     /**
