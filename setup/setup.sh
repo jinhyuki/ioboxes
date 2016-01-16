@@ -320,6 +320,7 @@ function setup_symfony {
     # php bin/console doctrine:generate:entities AppBundle/Entity/Product
     # php bin/console doctrine:generate:entities AppBundle
     # php bin/console doctrine:generate:entities Acme
+    # php bin/console generate:doctrine:crud
 
     # Create schema
     # php bin/console doctrine:schema:update --force

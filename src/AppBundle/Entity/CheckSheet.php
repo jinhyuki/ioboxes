@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CheckSheet
  * For associations see [this guide](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/association-mapping.html)
  *
- * @ORM\Table(name="check_sheet")
+ * @ORM\Table(name="tb_check_sheet")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CheckSheetRepository")
  */
 class CheckSheet

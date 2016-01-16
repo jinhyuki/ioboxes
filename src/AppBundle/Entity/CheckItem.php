@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CheckItem
  *
- * @ORM\Table(name="check_item")
+ * @ORM\Table(name="tb_check_item")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CheckItemRepository")
  */
 class CheckItem
