@@ -23,12 +23,10 @@ class CheckSheet
     private $id;
 
     /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -72,27 +70,4 @@ class CheckSheet
         return $this->name;
     }
 
-    /**
-     * Set userId
-     *
-     * @param \AppBundle\Entity\User $userId
-     *
-     * @return CheckSheet
-     */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
 }

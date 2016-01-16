@@ -22,12 +22,10 @@ class CheckItem
     private $id;
 
     /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity="CheckSheet")
-     * @ORM\JoinColumn(name="sheet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="check_sheet_id", referencedColumnName="id")
      */
-    private $sheetId;
+    private $checkSheet;
 
     /**
      * @var string
@@ -187,27 +185,4 @@ class CheckItem
         return $this->flushed;
     }
 
-    /**
-     * Set sheetId
-     *
-     * @param \AppBundle\Entity\CheckSheet $sheetId
-     *
-     * @return CheckItem
-     */
-    public function setSheetId(\AppBundle\Entity\CheckSheet $sheetId = null)
-    {
-        $this->sheetId = $sheetId;
-
-        return $this;
-    }
-
-    /**
-     * Get sheetId
-     *
-     * @return \AppBundle\Entity\CheckSheet
-     */
-    public function getSheetId()
-    {
-        return $this->sheetId;
-    }
 }
