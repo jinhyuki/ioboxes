@@ -57,7 +57,7 @@ class CheckSheetController extends Controller
             $em->persist($checkSheet);
             $em->flush();
 
-            return $this->redirectToRoute('checksheet_show', array('id' => $checksheet->getId()));
+            return $this->redirectToRoute('checksheet_show', array('id' => $checkSheet->getId()));
         }
 
         return $this->render('checksheet/new.html.twig', array(
