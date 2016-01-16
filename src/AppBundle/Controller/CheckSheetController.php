@@ -80,8 +80,13 @@ class CheckSheetController extends Controller
      * @Route("/{id}", name="checksheet_show")
      * @Method("GET")
      */
-    public function showAction(CheckSheet $checkSheet)
+    public function showAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $checkSheet = $em->getRepository('AppBundle:CheckSheet')->findOneBy( 
+            array('user' => $this->getUser(), 'id' => $id);
+        );
         $deleteForm = $this->createDeleteForm($checkSheet);
 
         return $this->render('checksheet/show.html.twig', array(
