@@ -36,7 +36,7 @@ class CheckSheetController extends Controller
 
         $checkSheetsJSON = $this->get('jms_serializer')->serialize($checkSheets, 'json');
 
-        dump($checkSheets, $checkSheetsJSON);
+        //dump($checkSheets, $checkSheetsJSON);
 
         return new Response(
             $checkSheetsJSON,
