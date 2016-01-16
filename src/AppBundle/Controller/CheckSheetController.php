@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\CheckSheet;
+use AppBundle\Entity\Error;
 use AppBundle\Form\CheckSheetType;
 
 /**
@@ -97,7 +98,7 @@ class CheckSheetController extends Controller
                 array('Content-Type' => 'application/json')
             );
         } else {
-            $result = array('result' => null, 'errors' => array(array('message' => 'Not found')));
+            $result = array('result' => null, 'errors' => array(new Error('MISS', 'Not found')));
             $json = $this->get('jms_serializer')->serialize($result, 'json');
             return new Response(
                 $json,
