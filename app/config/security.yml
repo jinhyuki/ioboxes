@@ -41,7 +41,7 @@ security:
                 check_path: /login_check
 
                 # the user is redirected here when they need to log in
-                login_path: /login
+                #login_path: /login
 
                 # if true, forward the user to the login form instead of redirecting
                 #use_forward: false
