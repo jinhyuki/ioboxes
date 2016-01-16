@@ -22,13 +22,11 @@ class Post
     private $id;
 
     /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
-    
+    private $user;
+
     /**
      * @var string
      *

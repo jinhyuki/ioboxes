@@ -42,15 +42,13 @@ class ProductController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->getUser();
-        $userId = $user->getId();
-        dump($user, $userId);
         $product = new Product();
         $form = $this->createForm('AppBundle\Form\ProductType', $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $product->setUserId($userId);
+            $product->setUser($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);

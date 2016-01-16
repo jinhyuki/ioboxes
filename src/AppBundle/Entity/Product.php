@@ -18,12 +18,10 @@ class Product
     protected $id;
 
     /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
+    private $user;
     
     /**
      * @ORM\Column(type="string", length=100)
@@ -120,29 +118,5 @@ class Product
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param \AppBundle\Entity\User $userId
-     *
-     * @return Product
-     */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 }
