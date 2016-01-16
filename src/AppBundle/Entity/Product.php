@@ -18,6 +18,14 @@ class Product
     protected $id;
 
     /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $userId;
+    
+    /**
      * @ORM\Column(type="string", length=100)
      */
     protected $name;

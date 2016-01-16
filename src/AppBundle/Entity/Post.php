@@ -22,6 +22,14 @@ class Post
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $userId;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
