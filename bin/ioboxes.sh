@@ -16,7 +16,9 @@ elif [ "$1" = "commit" ]; then
     echo "Action: Commit"
     # change directory
     cd /project/ioboxes/
-    git add . && git commit -m "$2" && git push origin master
+    git add . 
+    git commit -m "$2"
+    git push origin master
 else
     echo "usage:"
     echo "- ioboxes upgrade: upgrade current ioboxes"
