@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,13 +25,18 @@ class CheckSheetController extends Controller
      */
     public function indexAction()
     {
+
+        // JSON response
+        // See [this guide](http://symfony.com/doc/current/components/http_foundation/introduction.html)
         $em = $this->getDoctrine()->getManager();
 
         $checkSheets = $em->getRepository('AppBundle:CheckSheet')->findAll();
 
-        return $this->render('checksheet/index.html.twig', array(
+        $response = new JsonResponse();
+        $response->setData(array(
             'checkSheets' => $checkSheets,
         ));
+        return $response;
     }
 
     /**
@@ -46,6 +52,7 @@ class CheckSheetController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $checkSheet->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($checkSheet);
             $em->flush();
