@@ -12,6 +12,8 @@ elif [ "$1" = "upgrade" ]; then
     php bin/console doctrine:schema:update --force
     # restart server
     sudo systemctl restart nginx && sudo systemctl restart php-fpm
+    # clear cache
+    php symfony clear-cache
 elif [ "$1" = "commit" ]; then
     echo "Action: Commit"
     # change directory
