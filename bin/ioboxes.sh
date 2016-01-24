@@ -23,6 +23,9 @@ elif [ "$1" = "refresh" ]; then
     echo "Action: Refresh"
     # restart server
     sudo systemctl restart nginx && sudo systemctl restart php-fpm
+elif [ "$1" = "log" ]; then
+    echo "Action: Log"
+    tail -f /var/log/nginx/ioboxes.error.log
 elif [ "$1" = "error" ]; then
     echo "Action: Error"
     tail -f /var/log/nginx/ioboxes.error.log

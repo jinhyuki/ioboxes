@@ -27,11 +27,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+        api:
+            anonymous: ~
+            pattern: ^/api
+            http_basic: ~
         main:
             anonymous: ~
             #logout does not work with http_basic
-            #http_basic: ~
+            # http_basic: ~
             logout:
                 path:   /logout
                 target: /
