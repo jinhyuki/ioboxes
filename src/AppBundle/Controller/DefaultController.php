@@ -27,7 +27,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/", name="json")
+     * @Route("/json", name="default_json")
      */
     public function jsonAction()
     {
