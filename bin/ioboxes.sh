@@ -13,7 +13,8 @@ elif [ "$1" = "upgrade" ]; then
     # restart server
     sudo systemctl restart nginx && sudo systemctl restart php-fpm
     # clear cache
-    php symfony clear-cache
+    php bin/console cache:clear
+    php bin/console cache:clear --env=prod --no-debug
 elif [ "$1" = "commit" ]; then
     echo "Action: Commit"
     # change directory
@@ -26,7 +27,8 @@ elif [ "$1" = "refresh" ]; then
     # restart server
     sudo systemctl restart nginx && sudo systemctl restart php-fpm
     # clear cache
-    php symfony clear-cache
+    php bin/console cache:clear
+    php bin/console cache:clear --env=prod --no-debug
 elif [ "$1" = "log" ]; then
     echo "Action: Log"
     tail -f /var/log/nginx/ioboxes.error.log
