@@ -815,38 +815,4 @@ php bin/console generate:doctrine:crud
 
 
 
-## XVI. All-one-setup script `ioboxes.sh`
-
-```
-#!/bin/bash
-
-# Usage 
-# --upgrade (idempotent upgrade)
-# --install (idempotent yum install everything)
-# --checkout (checkout codebase)
-# --log
-# (/var/log/ioboxes/stdout.log)
-# (/var/log/ioboxes/error.log)
-# (/var/log/ioboxes/yum-list.log)
-# (yum list installed > /tmp/yum-list.txt)
-# must use sudo
-# 
-
-# Clear terminal.
-clear
-
-# CentOS Version Min and Max requirement
-
-# Yum Upgrade
-
-# Check CentOS version.
-
-# Add user
-
-# Install nginx
-
-# Install mariadb
-
-# Install php, php-fpm
-
-# Install other libraries.
+## XVI. All-one-setup script is in the folder

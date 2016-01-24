@@ -23,6 +23,12 @@ elif [ "$1" = "refresh" ]; then
     echo "Action: Refresh"
     # restart server
     sudo systemctl restart nginx && sudo systemctl restart php-fpm
+elif [ "$1" = "error" ]; then
+    echo "Action: Error"
+    tail -f /var/log/nginx/ioboxes.error.log
+elif [ "$1" = "access" ]; then
+    echo "Action: Access"
+    tail -f/var/log/nginx/ioboxes.access.log
 else
     echo "usage:"
     echo "- ioboxes upgrade: upgrade current ioboxes"

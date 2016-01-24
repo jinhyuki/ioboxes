@@ -2,12 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use AppBundle\Entity\CheckSheet;
+use AppBundle\Entity\Error;
+use AppBundle\Form\CheckSheetType;
+use AppBundle\Entity\Product;
 
 class DefaultController extends Controller
 {
@@ -21,6 +25,31 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ]);
     }
+
+    /**
+     * @Route("/", name="json")
+     */
+    public function jsonAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $checkSheets = $em->getRepository('AppBundle:CheckSheet')->findBy( 
+            array(),
+            array('id' => 'ASC')
+        );
+        $result = array('result' => $checkSheets, 'errors' => array());
+        $json = $this->get('jms_serializer')->serialize($result, 'json');
+
+        //dump($checkSheets, $json);
+
+        return new Response(
+            $json,
+            Response::HTTP_OK,
+            array('Content-Type' => 'application/json')
+        );
+    }
+
 
     /**
      * @Route("/default/create", name="default_create")

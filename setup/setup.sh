@@ -341,3 +341,19 @@ function setup_symfony {
     read -n 1 -s
 
 }
+
+# Setup HTTPS
+function setup_https {
+    sudo mkdir /etc/nginx/ssl
+    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+    # Country Name (2 letter code) [XX]:US
+    # State or Province Name (full name) []:CA
+    # Locality Name (eg, city) [Default City]:San Mateo    
+    # Organization Name (eg, company) [Default Company Ltd]:Iobox  
+    # Organizational Unit Name (eg, section) []:Service
+    # Common Name (eg, your name or your server's hostname) []:ioboxes.com
+    # Email Address []:admin@ioboxes.com
+    # [guide](https://www.digitalocean.com/community/tutorials/how-to-create-an-ssl-certificate-on-nginx-for-ubuntu-14-04)
+    sudo service nginx restart
+}
+
